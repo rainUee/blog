@@ -2,7 +2,7 @@
 import { createBrowserHistory, History } from 'D:/pantheru/myapp/blog/node_modules/@umijs/runtime';
 
 let options = {
-  "basename": "/blog"
+  "basename": "/rainuee.github.io/blog"
 };
 if ((<any>window).routerBase) {
   options.basename = (<any>window).routerBase;
