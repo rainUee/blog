@@ -20,7 +20,5 @@ jobs:
       with:
         ACCESS_TOKEN: ${{ secrets.ACTION_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: dist
-        REPOSITORY_NAME: rainuee/rainuee.github.io
-        TARGET_FOLDER: blog
+        FOLDER: build
         BUILD_SCRIPT: npm run build       
