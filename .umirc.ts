@@ -6,7 +6,7 @@ export default defineConfig({
   logo: '/avatar.png',
   favicon: '/avatar.png',
   //base: '/blog/',
-  //publicPath: './',
+  publicPath: '/blog/',
   // more config: https://d.umijs.org/config
   navs: [
     null, // null 值代表保留约定式生成的导航，只做增量配置
