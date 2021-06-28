@@ -20,5 +20,4 @@ jobs:
       with:
         ACCESS_TOKEN: ${{ secrets.ACTION_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: build
-        BUILD_SCRIPT: npm run build       
+        FOLDER: /dist
