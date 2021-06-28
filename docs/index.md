@@ -3,11 +3,11 @@ title: Rainee的知识库
 hero:
   title: rainUee
   desc: The best is yet to be.
-  logo: avatar.png
+  logo: /avatar.png
   actions:
     - text: Action →
       link: /frontend
-  image: logo.png
+  image: /logo.png
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: About Me
