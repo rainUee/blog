@@ -25,5 +25,4 @@ jobs:
         FOLDER: dist
         REPOSITORY_NAME: rainuee/rainuee.github.io
         TARGET_FOLDER: blog
-        BUILD_SCRIPT: npm install && npm run build
         
