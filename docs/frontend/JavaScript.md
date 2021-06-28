@@ -1,0 +1,208 @@
+# JavaScript
+
+## 基础
+
+### typeof
+
+```js
+typeof undefined === 'undefined';
+typeof null === 'object';
+typeof 123 === 'number';
+typeof '123' === 'string';
+typeof true === 'boolean';
+typeof Symbol() === 'symbol';
+typeof 123n === 'bigint';
+// 一共七种基本类型，最后一种bigint为新增基本类型
+typeof {} === 'object'; //array function null
+typeof function () {} === 'function';
+```
+
+nullish null undefined
+
+### 基本类型和引用类型
+
+基本类型存放在栈，引用类型存放在堆
+
+### 作用域
+
+```js
+for (var i = 0; i < 5; ++i) {
+  setTimeout(() => console.log(i), 0);
+}
+//5、5、5、5、5
+for (let i = 0; i < 5; ++i) {
+  setTimeout(() => console.log(i), 0);
+}
+//0、1、2、3、4
+```
+
+1. var 声明的变量存在于上层作用域，不存在于 for 循环的块级作用域；
+2. setTimeout 是异步操作；这里涉及到执行的顺序问题，setTimeout 后执行。
+3. 代码执行 5 次循环后，i 变量的值变为 5，然后再执行五次 console.log 均打印的是 5
+4. var 没有块级作用域，5 个 i 都指向一个内存(变量提升)；let 有作用域只会在循环本轮生效。
+
+```js
+var a = { n: 1 };
+var b = a;
+a.x = a = { n: 2 };
+console.log(a.x);
+console.log(b.x);
+//undefined
+//{n: 2}
+```
+
+### 闭包
+
+JavaScript 采用的是词法作用域（或者叫静态作用域），也就是说**函数作用域的位置在声明函数的时候已经决定了**（注意只是决定了位置，函数只有调用的时候才会实际生成作用域）。
+
+与之对应的是动态作用域（比如 Bash 脚本），此时**函数作用域的位置取决于调用该函数时的环境**。
+
+另外，通常当一个函数调用完成后会销毁作用域以及作用域内部的变量，但是如果函数调用完成时内部的变量依然被外部引用了，那么该函数的作用域就不会被销毁。.
+
+### 条件运算符
+
+```js
+function checkTitle(score) {
+  return score < 0 || score > 10
+    ? '无效分数'
+    : { 6: '秀才', 7: '进士', 8: '探花', 9: '榜眼', 10: '状元' }[~~score] ||
+        '秀才';
+}
+```
+
+## 数组
+
+### 数组去重
+
+```js
+Set;
+```
+
+### 数组扁平化
+
+```javascript
+var arr = [1, 2, [3, [4, 5]]];
+arr.flat(Infinity);
+```
+
+### 数组乱序
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+arr.sort(() => {
+  return Math.random() - 0.5;
+});
+
+// 加强版
+// 遍历数组，每一项和该项之前的随机项交换位置
+function shuffle(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let j = ~~(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+```
+
+~ 相当于按位取反， ~15 等于 -16，即 ~n = -(n+1)
+
+~~ 在处理正数的时候类似于 Math.floor，因为 -(-n-1)-1=n+1-1=n
+
+`Math.floor()`为向下取整
+
+### instanceof
+
+```js
+object instanceof constructor;
+```
+
+```js
+({} instanceof Object); // true
+[] instanceof Array; // true
+[] instanceof Object; // true
+var myNonObj = Object.create(null);
+myNonObj instanceof Object; // 返回 false, 一种创建非 Object 实例的对象的方法
+```
+
+### 浅拷贝
+
+```js
+// Object.assign
+let source = {
+  name: 'akara',
+  age: 20,
+};
+let target = Object.assign({}, source);
+
+// 扩展运算符
+let source = {
+  name: 'panther',
+  age: 20,
+};
+let target = { ...source };
+
+// slice
+let source = [1, 2, 3];
+let target = source.slice();
+
+// concat
+let source = [1, 2, 3];
+let target = source.concat();
+```
+
+### 深拷贝
+
+## 函数
+
+### 防抖
+
+当你触发事件后，如果在 n 秒内，没有再次触发该事件，那么就执行函数；如果在 n 秒内，再次触发了该事件，那么就取消计时器，重新开始计时
+
+### 节流
+
+## 算法
+
+洗牌算法
+
+```js
+function shuffle(arr) {
+  var result = [],
+    random;
+  while (arr.length > 0) {
+    random = Math.floor(Math.random() * arr.length);
+    result.push(arr[random]);
+    arr.splice(random, 1);
+  }
+  return result;
+}
+```
+
+将数组扁平化并去除其中重复数据，最终得到一个升序且不重复的数组
+
+```js
+arr = [[3, 12, 1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [14], 13]], 10];
+Array.from(new Set(arr.flat(Infinity))).sort((a, b) => {
+  return a - b;
+});
+```
+
+使用 sort() 对数组 [3, 15, 8, 29, 102, 22] 进行排序，输出结果
+
+```js
+arr = [3, 15, 8, 29, 102, 22];
+arr.sort();
+//[102, 15, 22, 29, 3, 8]
+//元素按照转换为的字符串的各个字符的Unicode位点进行排序
+arr.sort((a, b) => a - b);
+//[3, 8, 15, 22, 29, 102]
+```
+
+[实现模糊搜索结果的关键词高亮显示](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/141)
+
+## 前端安全
+
+### 跨站脚本攻击（XSS）
+
+过滤输入/转义输出
+
+把半角转义为全角
