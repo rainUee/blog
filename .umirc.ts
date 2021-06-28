@@ -4,7 +4,6 @@ export default defineConfig({
   title: 'rainUee',
   mode: 'site',
   logo: '/logo.jpg',
-  locales: [],
   // more config: https://d.umijs.org/config
   navs: [
     null, // null 值代表保留约定式生成的导航，只做增量配置
