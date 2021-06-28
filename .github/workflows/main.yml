@@ -1,0 +1,29 @@
+name: release blog to rainuee.github.io
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]    
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+      with:
+        persist-credentials: false
+    - name: Install and Build
+      run: |
+        npm i
+        npm start
+        npm run build
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.blog }}
+        BRANCH: gh-pages
+        FOLDER: dist
+        REPOSITORY_NAME: rainuee/rainuee.github.io
+        TARGET_FOLDER: blog
+        BUILD_SCRIPT: npm install && npm run build
+        
