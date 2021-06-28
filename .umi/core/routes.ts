@@ -62,14 +62,14 @@ export function getRoutes() {
           "hero": {
             "title": "rainUee",
             "desc": "<div class=\"markdown\"><p>The best is yet to be.</p></div>",
-            "logo": "/avatar.png",
+            "logo": "avatar.png",
             "actions": [
               {
                 "text": "Action →",
                 "link": "/frontend"
               }
             ],
-            "image": "/logo.png"
+            "image": "logo.png"
           },
           "features": [
             {

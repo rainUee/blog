@@ -3,8 +3,8 @@ import { defineConfig } from 'dumi';
 export default defineConfig({
   title: 'Rainee的知识库',
   mode: 'site',
-  logo: '/avatar.png',
-  favicon: '/avatar.png',
+  logo: 'avatar.png',
+  favicon: 'avatar.png',
   //base: '/blog/',
   publicPath: '/blog/',
   // more config: https://d.umijs.org/config
