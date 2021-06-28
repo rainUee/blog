@@ -57,7 +57,7 @@ export function getRoutes() {
         "exact": true,
         "meta": {
           "filePath": "docs/index.md",
-          "updatedTime": 1624891059000,
+          "updatedTime": 1624891745000,
           "title": "Rainee的知识库",
           "hero": {
             "title": "rainUee",

@@ -79,7 +79,7 @@
   "mode": "site",
   "repository": {
     "url": "",
-    "branch": "main"
+    "branch": "master"
   },
   "theme": {}
 }

@@ -5,6 +5,7 @@ export default defineConfig({
   mode: 'site',
   logo: '/avatar.png',
   favicon: '/avatar.png',
+  base: '/blog',
   publicPath: '/blog/',
   // more config: https://d.umijs.org/config
   navs: [
