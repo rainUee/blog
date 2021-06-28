@@ -15,7 +15,6 @@
 
 # umi
 .umi/.cache
-.umi/.core/routes.ts
 # .umi-production
 # .env.local
 

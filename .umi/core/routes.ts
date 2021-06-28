@@ -57,7 +57,7 @@ export function getRoutes() {
         "exact": true,
         "meta": {
           "filePath": "docs/index.md",
-          "updatedTime": 1624872532000,
+          "updatedTime": 1624886981000,
           "title": "Rainee的知识库",
           "hero": {
             "title": "rainUee",
@@ -99,7 +99,7 @@ export function getRoutes() {
         "exact": true,
         "meta": {
           "filePath": "docs/frontend/CSS.md",
-          "updatedTime": 1624886990632,
+          "updatedTime": 1624886981000,
           "slugs": [
             {
               "depth": 1,
@@ -146,7 +146,7 @@ export function getRoutes() {
         "exact": true,
         "meta": {
           "filePath": "docs/frontend/ES6.md",
-          "updatedTime": 1624886990864,
+          "updatedTime": 1624886981000,
           "slugs": [
             {
               "depth": 1,
