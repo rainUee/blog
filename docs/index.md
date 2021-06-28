@@ -1,9 +1,10 @@
 ---
 hero:
-  title: Site Name
-  desc: dumi site app example
+  title: rainUee
+  desc: The best is yet to be.
+  logo: /logo.jpg
   actions:
-    - text: Getting Started
+    - text: 主页
       link: /getting-started
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
@@ -18,4 +19,4 @@ features:
 footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
 ---
 
-## Hello dumi!
+## Rainee's frontend
