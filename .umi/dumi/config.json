@@ -75,11 +75,11 @@
     ]
   },
   "title": "Rainee的知识库",
-  "logo": "avatar.png",
+  "logo": "/avatar.png",
   "mode": "site",
   "repository": {
     "url": "",
-    "branch": "master"
+    "branch": "main"
   },
   "theme": {}
 }

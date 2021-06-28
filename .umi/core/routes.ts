@@ -57,19 +57,19 @@ export function getRoutes() {
         "exact": true,
         "meta": {
           "filePath": "docs/index.md",
-          "updatedTime": 1624886981000,
+          "updatedTime": 1624891059000,
           "title": "Rainee的知识库",
           "hero": {
             "title": "rainUee",
             "desc": "<div class=\"markdown\"><p>The best is yet to be.</p></div>",
-            "logo": "avatar.png",
+            "logo": "/avatar.png",
             "actions": [
               {
                 "text": "Action →",
                 "link": "/frontend"
               }
             ],
-            "image": "logo.png"
+            "image": "/logo.png"
           },
           "features": [
             {
