@@ -59,7 +59,7 @@ JavaScript 采用的是词法作用域（或者叫静态作用域），也就是
 
 另外，通常当一个函数调用完成后会销毁作用域以及作用域内部的变量，但是如果函数调用完成时内部的变量依然被外部引用了，那么该函数的作用域就不会被销毁。.
 
-### 条件运算符
+<!-- ### 条件运算符
 
 ```js
 function checkTitle(score) {
@@ -68,14 +68,14 @@ function checkTitle(score) {
     : { 6: '秀才', 7: '进士', 8: '探花', 9: '榜眼', 10: '状元' }[~~score] ||
         '秀才';
 }
-```
+``` -->
 
 ## 数组
 
 ### 数组去重
 
 ```js
-Set;
+[...new Set(arr)];
 ```
 
 ### 数组扁平化
@@ -150,15 +150,89 @@ let source = [1, 2, 3];
 let target = source.concat();
 ```
 
+浅拷贝复制的是 source 的引用地址，而并非堆里面的值。
+
 ### 深拷贝
+
+```js
+function deepClone(obj) {
+  let objClone = Array.isArray(obj) ? [] : {};
+  if (obj && typeof obj === 'object') {
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        //判断ojb子元素是否为对象，如果是，递归复制
+        if (obj[key] && typeof obj[key] === 'object') {
+          objClone[key] = deepClone(obj[key]);
+        } else {
+          //如果不是，简单复制
+          objClone[key] = obj[key];
+        }
+      }
+    }
+  }
+  return objClone;
+}
+let a = [1, 2, 3, 4],
+  b = deepClone(a);
+a[0] = 2;
+console.log(a, b);
+```
+
+```js
+function deepClone(obj) {
+  let _obj = JSON.stringify(obj),
+    objClone = JSON.parse(_obj);
+  return objClone;
+}
+let a = [0, 1, [2, 3], 4],
+  b = deepClone(a);
+a[0] = 1;
+a[2][0] = 1;
+console.log(a, b);
+```
+
+深拷贝，是拷贝对象各个层级的属性。
 
 ## 函数
 
 ### 防抖
 
+（多次变为最后一次）
+
 当你触发事件后，如果在 n 秒内，没有再次触发该事件，那么就执行函数；如果在 n 秒内，再次触发了该事件，那么就取消计时器，重新开始计时
 
 ### 节流
+
+（多次变为隔一段时间一次）
+
+## Promise
+
+链式调用->解决回调地狱
+
+```js
+doSomething(function (result) {
+  doSomethingElse(
+    result,
+    function (newResult) {
+      doThirdThing(
+        newResult,
+        function (finalResult) {
+          console.log('Got the final result: ' + finalResult);
+        },
+        failureCallback,
+      );
+    },
+    failureCallback,
+  );
+}, failureCallback);
+```
+
+### reject 和 catch 处理上有什么区别
+
+reject 用来抛出异常，catch 用来处理异常
+reject 是 Promise 的方法，而 then 和 catch 是 Promise 的实例的方法（Promise.prototype.then 和 Promise.prototype.catch）。
+
+(catch 是语法糖)
 
 ## 算法
 

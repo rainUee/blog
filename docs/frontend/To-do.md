@@ -41,8 +41,6 @@ flex/float/grid/table
 
 ## sessionstorage 和 locastorage
 
-## 节流（多次变为隔一段时间一次）防抖（多次变为最后一次）
-
 ## 事件代理
 
 ul 下的 li 需要绑定
@@ -69,10 +67,6 @@ typeof
 
 eval/v-html 可能会导致 xss？
 
-## transition 和 animation 的区别
-
-Animation 和 transition 大部分属性是相同的，他们都是随时间改变元素的属性值，他们的主要区别是 transition 需要触发一个事件才能改变属性，而 animation 不需要触发任何事件的情况下才会随时间改变属性值，并且 transition 为 2 帧，从 from …. to，而 animation 可以一帧一帧的。
-
 ## 待办
 
 1. foreach 和 map 的区别
@@ -85,7 +79,7 @@ Animation 和 transition 大部分属性是相同的，他们都是随时间改�
 
 3. promise 的 then 有两个参数 第一个捕获 resolve 的 第二个是捕获 rejected 的 第二个参数和 promise.catch 的区别 【滴滴面试】
 
-4. async 包裹了的函数和普通函数的区别， 我知道您在讲 async 的时候说这个是一个语法糖 但是具体和普通函数区别其实得看看原理才知道这个是什么区别
+4. async 包裹了的函数和普通函数的区别
 
 5. 还有的面试官问了的前端的 jsonp 如果一直没返回怎么办 这个后来查询是计时器做一个轮询
 
