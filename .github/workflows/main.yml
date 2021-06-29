@@ -31,7 +31,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACTION_TOKEN}}
           BRANCH: gh-pages
           FOLDER: dist
-          REPOSITORY_NAME: rainuee/rainuee.github.io/blog
+          REPOSITORY_NAME: rainuee/blog
           # TARGET_FOLDER: blog
 
         env:
