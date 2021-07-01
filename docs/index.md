@@ -5,7 +5,7 @@ hero:
   desc: The best is yet to be.
   logo: avatar.png
   actions:
-    - text: Action➡️
+    - text: check it out
       link: /frontend
   image: logo.png
 features:
