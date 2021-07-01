@@ -1,6 +1,6 @@
 # Vue
 
-## **自检清单**
+## 自检清单
 
 1. 第一个层次：使用
 
@@ -12,17 +12,17 @@
 
    - 组件通信
 
-     - provide / inject
+     provide / inject
 
-       <!--to do: 今天看到说最好不要用inject-->
+     <!--to do: 今天看到说最好不要用inject-->
 
-     - pros emit
+     pros emit
 
-     - ![img](https://juejin.im/equation?tex=attr)listen
+     ![img](https://juejin.im/equation?tex=attr)listen
 
-     - event bus
+     event bus
 
-     - 自行实现 dispatch 和 broadcast 方法
+     自行实现 dispatch 和 broadcast 方法
 
 2. 第二层：原理
 
@@ -45,6 +45,8 @@
 ## 生命周期
 
 Vue 实例从创建到销毁的过程
+
+![lifecycle](https://v3.cn.vuejs.org/images/lifecycle.svg)
 
 ### 生命周期函数 hook
 
@@ -81,6 +83,16 @@ Vue 实例从创建到销毁的过程
 8. Destroyed
 
    实例销毁。
+
+### activated 和 deactivated 函数
+
+```html
+<keep-alive>
+  <component :is="view"></component>
+</keep-alive>
+```
+
+`keep-alive`包裹动态组件时，会缓存
 
 ## 对 MVVM 的理解
 
@@ -157,18 +169,22 @@ vue-router 是路由跳转或同一个页面跳转
 
 vue-router 是异步加载`this.$nextTick(()={url})`
 
+## v-if 和 v-show 的区别
+
+- v-if: 每次都会重新删除或创建元素来控制 DOM 结点的存在与否
+
+  v-if 会导致重绘
+
+- v-show: 是切换了元素的样式，`dispaly:none` `display:block`
+
+  使用场景：tab/勾选（频换切换
+
+## 为什么 Vue 组件中的 data 是一个函数
+
+当一个组件被定义，data 必须声明为返回一个初始数据对象的函数，因为组件可能被用来创建多个实例。如果 data 仍然是一个纯粹的对象，则所有的实例将共享引用同一个数据对象！通过提供 data 函数，每次创建一个新实例后，我们能够调用 data 函数，从而返回初始数据的一个全新副本数据对象。
+
+简而言之，就是 data 中数据可能会被复用，要保证不同组件调用的时候数据是相同的。
+
 ## diff 算法
 
 <!--to do-->
-
-## 为什么 Vue 组件中的 data 是一个函数原理(详细易懂)
-
-### v-if 和 v-show 的区别
-
-v-if 会导致重绘
-
-v-show 是 tab/勾选（频换切换
-
-link
-
-import
