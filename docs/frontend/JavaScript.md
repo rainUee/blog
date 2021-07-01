@@ -70,11 +70,10 @@ function checkTitle(score) {
 }
 ``` -->
 
-### foreach 和 map 的区别
+### forEach 和 map 的区别
 
-一个可以中断 一个不可以中断
-改变原来数据项
-map 返回组成数组
+forEach: 返回值为 undefined，无法中止，可以通过索引来修改原来的数组
+map: 返回新数组，callback 需要有 return 值，若没有则返回 undefined
 
 ## 数组
 

@@ -32,7 +32,7 @@ animation 和 transition 大部分属性是相同的，他们都是随时间改�
 
 ### 哪些元素会生成 BFC
 
-根元素 (`<htmL`)
+根元素 (`<htmL>`)
 overflow 不为 visible 的块元素
 float 不为 none 的元素
 position 为 fixed 和 absolute 的元素
