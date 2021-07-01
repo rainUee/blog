@@ -70,6 +70,12 @@ function checkTitle(score) {
 }
 ``` -->
 
+### foreach 和 map 的区别
+
+一个可以中断 一个不可以中断
+改变原来数据项
+map 返回组成数组
+
 ## 数组
 
 ### 数组去重
@@ -227,12 +233,24 @@ doSomething(function (result) {
 }, failureCallback);
 ```
 
+<!-- TODO: promise的优缺点 -->
+
 ### reject 和 catch 处理上有什么区别
 
 reject 用来抛出异常，catch 用来处理异常
 reject 是 Promise 的方法，而 then 和 catch 是 Promise 的实例的方法（Promise.prototype.then 和 Promise.prototype.catch）。
 
 (catch 是语法糖)
+
+### Event Loop
+
+![参考](http://vimeo.com/96425312)
+
+### 宏任务和微任务
+
+微任务和宏任务是异步任务的两个分类。
+宏任务：`script` `setTimeOut` `setInterval` `setImmediate`
+微任务：`Promise.then` `process` `nextTick` `Object.observe`
 
 ## 算法
 
@@ -277,6 +295,13 @@ arr.sort((a, b) => a - b);
 
 ### 跨站脚本攻击（XSS）
 
+将用户输入的东西作为脚本输出
+解决方法：
 过滤输入/转义输出
-
 把半角转义为全角
+eval/v-html 可能会导致 xss？
+eval 将字符串解析成 js 并执行，消耗性能（一次解析，一次执行）
+
+## 面向对象的特点
+
+抽象、继承、多态

@@ -1,6 +1,42 @@
 # CSS
 
-## 面试题
+### 盒模型
+
+`box-sizing`: `border-box` `content-box` `inherit`.
+context-box: W3C 盒模型，width = content
+border-box: IE 盒模型， width = border + padding + content
+
+### 画一条 0.5px 的线
+
+```html
+<meta
+  name="viewport"
+  content="initial-scale=0.5,minimum-scale=0.5,maximun-scale=0.5,user-scalable=no"
+/>
+```
+
+```css
+transform: scale(0.5, 0.5);
+```
+
+### link 和 import 的区别
+
+@import 引用的 css 会等到页面加载结束后加载。
+
+### transition 和 animation 的区别
+
+animation 和 transition 大部分属性是相同的，他们都是随时间改变元素的属性值，他们的主要区别是 transition 需要触发一个事件才能改变属性，而 animation 不需要触发任何事件的情况下才会随时间改变属性值，并且 transition 为 2 帧，从 from …. to，而 animation 可以一帧一帧的。
+
+<!-- TODO: 使用场景 -->
+<!-- 导航的 tab 的切换（只有开始和结束 -->
+
+### 哪些元素会生成 BFC
+
+根元素 (`<htmL`)
+overflow 不为 visible 的块元素
+float 不为 none 的元素
+position 为 fixed 和 absolute 的元素
+display 为 `inline-block` `table-cell` `table-caption` `flex` `inline-flex`的元素
 
 ### 怎么让一个 div 水平垂直居中
 
@@ -73,9 +109,23 @@ div.parent {
 }
 ```
 
-[CSS Grid 网格布局教程](http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html)
+[Grid 布局](http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html)
 
 `place-items`是`align-items`和`justify-items`两个 CSS 属性的简写
+
+### CSS 选择器
+
+内联样式(`style="font-weight:bold"`) > 类型选择器(`h1`)，伪元素(`::before`) > 类选择器，属性选择器(`[type="radio"]`)，伪类(`:hover`) > ID 选择器(`#example`)
+!important 的缺点：破坏了样式表中的固有的级联规则
+
+### 偶数选择器
+
+<!-- TODO:手写 -->
+
+### `inline` `block` `inline-block` 的区别
+
+`inline`: 不会独占一行，设置宽高无效
+`inline-block`: 既具有`block`的宽高属性，又具有`inline`的同行属性
 
 ### 已知如下代码，如何修改才能让图片宽度为 300px ？注意下面代码不可修改
 
@@ -111,9 +161,3 @@ zoom: 0.625;
   3. **性 能**：提升为合成层，不会触发重绘，性能较高；
   4. **继 承**：会被子元素继承,且子元素并不能通过 `opacity: 1` 来取消隐藏；
   5. **transition**：`transition` 不支持 `opacity`。
-
-### transition 和 animation 的区别
-
-animation 和 transition 大部分属性是相同的，他们都是随时间改变元素的属性值，他们的主要区别是 transition 需要触发一个事件才能改变属性，而 animation 不需要触发任何事件的情况下才会随时间改变属性值，并且 transition 为 2 帧，从 from …. to，而 animation 可以一帧一帧的。
-
-### 偶数选择器

@@ -3,7 +3,7 @@ title: Rainee的知识库
 hero:
   title: rainUee
   desc: The best is yet to be.
-  logo: avatar.png
+  logo: /blog/avatar.png
   actions:
     - text: check it out
       link: /frontend

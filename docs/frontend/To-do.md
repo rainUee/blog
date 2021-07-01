@@ -15,10 +15,6 @@
 
 ![img](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/62700647745a40849c657479c0efc2d3~tplv-k3u1fbpfcp-watermark.image)
 
-## transform 和 animation 的区别
-
-transform：导航的 tab 的切换（只有开始和结束
-
 ## 左右盒子
 
 flex/float/grid/table
@@ -53,49 +49,20 @@ typeof
 
 箭头函数
 
-## 宏任务和微任务
-
-## XSS
-
-### 将用户输入的东西作为脚本输出
-
-### 解决办法
-
-过滤输入
-
-转义输出
-
-eval/v-html 可能会导致 xss？
-
 ## 待办
 
-1. foreach 和 map 的区别
-   我后来去查 一个可以中断 一个不可以中断
-   还有就是一个改变原来数据项 一个不改变原来数据项
-   一个返回组成数组 一个不返回新的数组等
+async 包裹了的函数和普通函数的区别
 
-2. promise 有什么优缺点
-   这个我觉得是 promise 的一个传递性
+还有的面试官问了的前端的 jsonp 如果一直没返回怎么办 这个后来查询是计时器做一个轮询
 
-3. promise 的 then 有两个参数 第一个捕获 resolve 的 第二个是捕获 rejected 的 第二个参数和 promise.catch 的区别 【滴滴面试】
+箭头函数的优缺点
+比如不能用 arguments
+不能用作 constructor
 
-4. async 包裹了的函数和普通函数的区别
+还有 http 中会问 http 协议个 tcp/ip 协议和 UDP 协议
 
-5. 还有的面试官问了的前端的 jsonp 如果一直没返回怎么办 这个后来查询是计时器做一个轮询
+get 方法发送数据方式为什么会不安全
 
-6. 前端面向对象编程的特点 这个您讲过 只是没具体提这三个概念
-   封装 继承 多态
+我回答了数据可以直接显示的在请求 url 地址中看到 但是面试官说我讲的不对
 
-7. 箭头函数的优缺点
-   比如不能用 arguments
-   不能用作 constructor
-
-8. css 其实还有一些问道我了 不是不会用只是记不住
-   css 的选择器的权限 很久之前的哪个表 important 10000 等。。。
-   css 的偶数选择器 面试让手写【滴滴面试】
-
-9. 还有 http 中会问 http 协议个 tcp/ip 协议和 UDP 协议
-
-10. get 方法发送数据方式为什么会不安全
-    我回答了数据可以直接显示的在请求 url 地址中看到 但是面试官说我讲的不对
-    前端如何监听请求完毕的 如果不用 callback 轮询？
+前端如何监听请求完毕的 如果不用 callback 轮询？

@@ -14,7 +14,7 @@
 
      provide / inject
 
-     <!--to do: 今天看到说最好不要用inject-->
+     <!--TODO: 今天看到说最好不要用inject-->
 
      pros emit
 
@@ -187,4 +187,4 @@ vue-router 是异步加载`this.$nextTick(()={url})`
 
 ## diff 算法
 
-<!--to do-->
+<!--TODO:-->
