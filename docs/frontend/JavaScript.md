@@ -1,3 +1,12 @@
+---
+title: JavaScript
+order: 1
+toc: menu
+nav:
+  title: JS
+  order: 2
+---
+
 # JavaScript
 
 ## 基础
