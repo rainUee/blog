@@ -1,13 +1,7 @@
 ---
 title: JavaScript
-order: 1
-toc: menu
-nav:
-  title: JS
-  order: 2
+order: 3
 ---
-
-# JavaScript
 
 ## 基础
 
@@ -26,11 +20,46 @@ typeof {} === 'object'; //array function null
 typeof function () {} === 'function';
 ```
 
-nullish null undefined
-
 ### 基本类型和引用类型
 
 基本类型存放在栈，引用类型存放在堆
+Boolean、 Number、 String 不是由内置函数 new 出来的
+symbol 是 ES6 引入的一种新的原始数据，表示独一无二且不可改变的值。通过 Symbol 函数调用生成，由于生成的 symbol 值为原始类型，所以 Symbol 函数不能使用 new 调用。
+
+### null 和 undefined 的区别
+
+null 表示一个空对象指针
+
+```js
+Object.getPrototypeOf(Object.prototype);
+// null
+```
+
+undefined 表示未定义
+
+1. 变量被声明了，但没有赋值时，就等于 undefined。
+2. 调用函数时，应该提供的参数没有提供，该参数等于 undefined。
+3. 对象没有赋值的属性，该属性的值为 undefined。
+4. 函数没有返回值时，默认返回 undefined。
+
+```js
+//检测 null
+var a = null;
+!a && typeof a === 'object';
+```
+
+### 判断 JavaScript 数据类型
+
+`typeof`、`instanceof`、`constructor`、`toString`
+
+#### 判断数组
+
+```js
+[] instanceof Array;
+[].constructor === Array;
+Object.prototype.toString.call([]);
+Array.isArray([]);
+```
 
 ### 作用域
 
@@ -62,13 +91,7 @@ console.log(b.x);
 
 ### 闭包
 
-JavaScript 采用的是词法作用域（或者叫静态作用域），也就是说**函数作用域的位置在声明函数的时候已经决定了**（注意只是决定了位置，函数只有调用的时候才会实际生成作用域）。
-
-与之对应的是动态作用域（比如 Bash 脚本），此时**函数作用域的位置取决于调用该函数时的环境**。
-
-另外，通常当一个函数调用完成后会销毁作用域以及作用域内部的变量，但是如果函数调用完成时内部的变量依然被外部引用了，那么该函数的作用域就不会被销毁。
-
-**闭包**：能够读取到其他函数内部变量的函数，或者子函数在外调用，子函数所在的父函数的作用域不会被释放。
+能够读取到其他函数内部变量的函数，或者子函数在外调用，子函数所在的父函数的作用域不会被释放。
 
 <!-- ### 条件运算符
 
@@ -140,7 +163,23 @@ var myNonObj = Object.create(null);
 myNonObj instanceof Object; // 返回 false, 一种创建非 Object 实例的对象的方法
 ```
 
+实现 instanceof
+
+```js
+function isInstanceof(a, b) {
+  if (typeof a !== 'object' || a === null) return false;
+  let proto = Object.getPrototypeOf(a);
+  while (true) {
+    if (proto === null) return false;
+    if (proto === b.prototype) return true;
+    proto = Object.getPrototypeOf(proto);
+  }
+}
+```
+
 ### 浅拷贝
+
+将一个变量赋值给另一个变量时，基础类型复制的是值，赋值完成两个变量在没有任何关系；而对象类型的复制的是地址，修改一个变量另一个变量也会跟着一起变化。
 
 ```js
 // Object.assign
