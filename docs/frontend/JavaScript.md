@@ -252,6 +252,10 @@ textarea.addEventListener('keyup', function () {
 
 ## Promise
 
+### 三种状态
+
+pending fulfilled rejected
+
 链式调用->解决回调地狱
 
 ```js
@@ -271,6 +275,55 @@ $.get('./data1.json', function (data1) {
   });
 });
 console.log('end');
+```
+
+### 实现 promise
+
+```js
+// 定义三种状态
+const PENDING = 'PENDING'; // 进行中
+const FULFILLED = 'FULFILLED'; // 已成功
+const REJECTED = 'REJECTED'; // 已失败
+
+class Promise {
+  constructor(exector) {
+    // 初始化状态
+    this.status = PENDING;
+    // 将成功、失败结果放在this上，便于then、catch访问
+    this.value = undefined;
+    this.reason = undefined;
+
+    const resolve = (value) => {
+      // 只有进行中状态才能更改状态
+      if (this.status === PENDING) {
+        this.status = FULFILLED;
+        this.value = value;
+      }
+    };
+    const reject = (reason) => {
+      // 只有进行中状态才能更改状态
+      if (this.status === PENDING) {
+        this.status = REJECTED;
+        this.reason = reason;
+      }
+    };
+    // 立即执行exector
+    // 把内部的resolve和reject传入executor，用户可调用resolve和reject
+    exector(resolve, reject);
+  }
+  then(onFulfilled, onRejected) {
+    // then是微任务，这里用setTimeout模拟
+    setTimeout(() => {
+      if (this.status === FULFILLED) {
+        // FULFILLED状态下才执行
+        onFulfilled(this.value);
+      } else if (this.status === REJECTED) {
+        // REJECTED状态下才执行
+        onRejected(this.reason);
+      }
+    });
+  }
+}
 ```
 
 <!-- TODO: promise的优缺点 -->
@@ -365,3 +418,10 @@ console.log(location.pathname); // '/learn/199'
 console.log(location.search);
 console.log(location.hash);
 ```
+
+<!-- TODO: history 和 hash -->
+
+## 前端路由 history 和 hash
+
+hash 模式：监听浏览器地址 hash 值（# 以及后的字符）变化，执行相应 js 切换网页
+history 模式： 利用 history API 实现 url 地址改变，网页内容改变

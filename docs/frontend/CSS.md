@@ -118,9 +118,14 @@ div.parent {
 内联样式(`style="font-weight:bold"`) > 类型选择器(`h1`)，伪元素(`::before`) > 类选择器，属性选择器(`[type="radio"]`)，伪类(`:hover`) > ID 选择器(`#example`)
 !important 的缺点：破坏了样式表中的固有的级联规则
 
-### 偶数选择器
+### 奇数/偶数选择器
 
-<!-- TODO:手写 -->
+```css
+div:nth-child(odd) {
+} //奇数行
+div:nth-child(even) {
+} //偶数行
+```
 
 ### `inline` `block` `inline-block` 的区别
 
