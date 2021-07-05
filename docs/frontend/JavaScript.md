@@ -57,7 +57,9 @@ JavaScript 采用的是词法作用域（或者叫静态作用域），也就是
 
 与之对应的是动态作用域（比如 Bash 脚本），此时**函数作用域的位置取决于调用该函数时的环境**。
 
-另外，通常当一个函数调用完成后会销毁作用域以及作用域内部的变量，但是如果函数调用完成时内部的变量依然被外部引用了，那么该函数的作用域就不会被销毁。.
+另外，通常当一个函数调用完成后会销毁作用域以及作用域内部的变量，但是如果函数调用完成时内部的变量依然被外部引用了，那么该函数的作用域就不会被销毁。
+
+**闭包**：能够读取到其他函数内部变量的函数，或者子函数在外调用，子函数所在的父函数的作用域不会被释放。
 
 <!-- ### 条件运算符
 
@@ -70,11 +72,10 @@ function checkTitle(score) {
 }
 ``` -->
 
-### foreach 和 map 的区别
+### forEach 和 map 的区别
 
-一个可以中断 一个不可以中断
-改变原来数据项
-map 返回组成数组
+forEach: 返回值为 undefined，无法中止，可以通过索引来修改原来的数组
+map: 返回新数组，callback 需要有 return 值，若没有则返回 undefined
 
 ## 数组
 
@@ -207,33 +208,74 @@ console.log(a, b);
 
 当你触发事件后，如果在 n 秒内，没有再次触发该事件，那么就执行函数；如果在 n 秒内，再次触发了该事件，那么就取消计时器，重新开始计时
 
+- 监听一个输入框，文字变化后触发 change 事件
+- 直接用 keyup 事件，则会频繁触发 change 事件
+- 防抖：用户输入结束或暂停时，才会触发 change 事件
+
+```js
+function debounce(fn, delay) {
+  let timer = null;
+  return function () {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, arguments);
+      timer = null;
+    }, delay);
+  };
+}
+```
+
 ### 节流
 
 （多次变为隔一段时间一次）
+
+- 拖拽一个元素时，要随时拿到该元素被拖拽的位置
+- 直接用 drag 事件，则会频发触发，很容易导致卡顿
+- 节流：无论拖拽速度多快，都会每隔 100ms 触发一次
+
+例如要在文字改变时触发一个 change 事件，通过 keyup 来监听。使用节流。
+
+```js
+var textarea = document.getElementById('text');
+var timeoutId;
+textarea.addEventListener('keyup', function () {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  timeoutId = setTimeout(function () {
+    // 触发 change 事件
+  }, 100);
+});
+```
 
 ## Promise
 
 链式调用->解决回调地狱
 
 ```js
-doSomething(function (result) {
-  doSomethingElse(
-    result,
-    function (newResult) {
-      doThirdThing(
-        newResult,
-        function (finalResult) {
-          console.log('Got the final result: ' + finalResult);
-        },
-        failureCallback,
-      );
-    },
-    failureCallback,
-  );
-}, failureCallback);
+// callback-hell
+console.log('start');
+$.get('./data1.json', function (data1) {
+  console.log(data1);
+  $.get('./data2.json', function (data2) {
+    console.log(data2);
+    $.get('./data3.json', function (data3) {
+      console.log(data3);
+      $.get('./data4.json', function (data4) {
+        console.log(data4);
+        // ...继续嵌套...
+      });
+    });
+  });
+});
+console.log('end');
 ```
 
 <!-- TODO: promise的优缺点 -->
+
+[ES6 中的 Promise](http://www.cnblogs.com/wangfupeng1988/p/6515855.html)
 
 ### reject 和 catch 处理上有什么区别
 
@@ -305,3 +347,21 @@ eval 将字符串解析成 js 并执行，消耗性能（一次解析，一次�
 ## 面向对象的特点
 
 抽象、继承、多态
+
+## 如何检测浏览器的类型
+
+```javascript
+var ua = navigator.userAgent;
+var isChrome = ua.indexOf('Chrome');
+console.log(isChrome);
+```
+
+## 拆解 url 的各部分
+
+```javascript
+console.log(location.href);
+console.log(location.protocol); // 'http:' 'https:'
+console.log(location.pathname); // '/learn/199'
+console.log(location.search);
+console.log(location.hash);
+```

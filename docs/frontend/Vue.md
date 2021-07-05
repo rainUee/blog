@@ -93,6 +93,7 @@ Vue 实例从创建到销毁的过程
 ```
 
 `keep-alive`包裹动态组件时，会缓存
+[keep-alive 的使用原理](https://juejin.cn/post/6979853847007068197)
 
 ## 对 MVVM 的理解
 
@@ -159,6 +160,18 @@ var app = new Vue({
 }
 ```
 
+## Vue 双向绑定原理
+
+Vue 数据双向绑定是通过数据劫持结合发布者-订阅者模式的方式来实现的，利用了`Object.defineProperty()`这个方法重新定义了对象获取属性值`get`和设置属性值`set`
+
+Vue3.x 使用 `proxy`替代 `Object.defineProperty()`
+因为数据劫持无法监听通过索引修改数组的值的变化，也无法监听 object 的值的变化。
+
+## Vue 如何监测数组变换
+
+push, pop, shift, unshift, sort, splice, reverse
+[官方文档](https://cn.vuejs.org/v2/guide/reactivity.html#%E6%A3%80%E6%B5%8B%E5%8F%98%E5%8C%96%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
+
 ## vue-router 与 location.href 的区别
 
 vue-router 使用 pushState 进行路由更新；location.href 会触发浏览器，页面重新加载
@@ -185,6 +198,12 @@ vue-router 是异步加载`this.$nextTick(()={url})`
 
 简而言之，就是 data 中数据可能会被复用，要保证不同组件调用的时候数据是相同的。
 
+## nextTick
+
+当我们修改`State`会重新渲染真实 DOM，而这一步操作实际上是异步的。当我们修改`State`，它会把数据的改变缓存进一个队列当中，当一个`tick`（可以把宏任务和微任务阶段都当成一个`tick`）结束时，再渲染真实的 DOM。
+
+如果我们需要在代码中获取更新后的 DOM 的值，需要使用`this.$nextTick`
+
 ## diff 算法
 
-<!--TODO:-->
+<!--TODO: https://juejin.cn/post/6978423272064942110-->

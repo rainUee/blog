@@ -6,6 +6,7 @@ hero:
   logo: /blog/avatar.png
   actions:
     - text: check it out
+      # TODO: 按钮css https://codepen.io/kathykato/pen/gOOjgmP
       link: /frontend
   image: logo.png
 features:
