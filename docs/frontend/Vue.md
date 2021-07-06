@@ -172,6 +172,16 @@ Vue3.x 使用 `proxy`替代 `Object.defineProperty()`
 push, pop, shift, unshift, sort, splice, reverse
 [官方文档](https://cn.vuejs.org/v2/guide/reactivity.html#%E6%A3%80%E6%B5%8B%E5%8F%98%E5%8C%96%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 
+## v-model
+
+v-model 来做表单双向数据绑定，v-model="msg"实则是 :value="msg" @input="msg = $event.target.value"的语法糖。
+
+所以 v-model 指令同时做了两件事：
+
+1.监听 input 输入事件
+
+2.将输入的值绑定到对应数据上
+
 ## vue-router 与 location.href 的区别
 
 vue-router 使用 pushState 进行路由更新；location.href 会触发浏览器，页面重新加载
@@ -181,6 +191,14 @@ vue-router 使用 diff 算法，按需加载
 vue-router 是路由跳转或同一个页面跳转
 
 vue-router 是异步加载`this.$nextTick(()={url})`
+
+<!-- TODO: history 和 hash -->
+
+## 前端路由 history 和 hash
+
+hash 模式：监听浏览器地址 hash 值（# 以及后的字符）变化，执行相应 js 切换网页
+
+history 模式： 利用 history API 实现 url 地址改变，网页内容改变
 
 ## v-if 和 v-show 的区别
 

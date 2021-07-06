@@ -466,10 +466,3 @@ console.log(location.pathname); // '/learn/199'
 console.log(location.search);
 console.log(location.hash);
 ```
-
-<!-- TODO: history 和 hash -->
-
-## 前端路由 history 和 hash
-
-hash 模式：监听浏览器地址 hash 值（# 以及后的字符）变化，执行相应 js 切换网页
-history 模式： 利用 history API 实现 url 地址改变，网页内容改变
