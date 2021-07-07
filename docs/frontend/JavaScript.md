@@ -21,7 +21,9 @@ nullish null undefined
 
 ### 基本类型和引用类型
 
-基本类型存放在栈，引用类型存放在堆
+基本数据类型直接存放在栈。
+
+引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。
 
 ### 作用域
 
@@ -162,6 +164,16 @@ let target = source.concat();
 ### 深拷贝
 
 ```js
+let a = [0, 1, [2, 3], 4],
+  b = JSON.parse(JSON.stringify(a));
+a[0] = 1;
+a[2][0] = 1;
+console.log(a, b);
+```
+
+undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略
+
+```js
 function deepClone(obj) {
   let objClone = Array.isArray(obj) ? [] : {};
   if (obj && typeof obj === 'object') {
@@ -182,19 +194,6 @@ function deepClone(obj) {
 let a = [1, 2, 3, 4],
   b = deepClone(a);
 a[0] = 2;
-console.log(a, b);
-```
-
-```js
-function deepClone(obj) {
-  let _obj = JSON.stringify(obj),
-    objClone = JSON.parse(_obj);
-  return objClone;
-}
-let a = [0, 1, [2, 3], 4],
-  b = deepClone(a);
-a[0] = 1;
-a[2][0] = 1;
 console.log(a, b);
 ```
 
