@@ -1,4 +1,7 @@
-# CSS
+---
+title: CSS
+order: 2
+---
 
 ### 盒模型
 
@@ -121,10 +124,12 @@ div.parent {
 ### 奇数/偶数选择器
 
 ```css
+/* 奇数行 */
 div:nth-child(odd) {
-} //奇数行
+}
+/* 偶数行 */
 div:nth-child(even) {
-} //偶数行
+}
 ```
 
 ### `inline` `block` `inline-block` 的区别
