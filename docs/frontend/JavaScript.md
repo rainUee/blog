@@ -114,6 +114,8 @@ function checkTitle(score) {
 forEach: 返回值为 undefined，无法中止，可以通过索引来修改原来的数组
 map: 返回新数组，callback 需要有 return 值，若没有则返回 undefined
 
+forEach 结合 try...catch() 可以跳出循环
+
 ## 数组
 
 ### 数组去重

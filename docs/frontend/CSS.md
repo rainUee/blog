@@ -137,6 +137,21 @@ div:nth-child(even) {
 `inline`: 不会独占一行，设置宽高无效
 `inline-block`: 既具有`block`的宽高属性，又具有`inline`的同行属性
 
+### 实现一个三角形
+
+```html
+<div class="triangle"></div>
+```
+
+```css
+.triangle {
+  width: 0;
+  height: 0;
+  border: 50px solid;
+  border-color: transparent transparent #d9534f;
+}
+```
+
 ### 已知如下代码，如何修改才能让图片宽度为 300px ？注意下面代码不可修改
 
 ```html

@@ -27,6 +27,8 @@ order: 1
 - 遇到`<script>`则暂停渲染，优先加载并执行 JS 代码，完成再继续
 - 直至把 Render Tree 渲染完成
 
+![过程](https://pic3.zhimg.com/v2-1f9f6062ac51ed944e2dcbfd618636ca_r.jpg)
+
 ### 为何要把 css 放在 head 中？？？
 
 在 DOM Tree 生成之前加载完 CSS，DOM Tree 生成之后直接和 CSSOM 整合渲染，一步到位

@@ -1,4 +1,7 @@
-# Vue
+---
+title: Vue
+order: 5
+---
 
 ## 自检清单
 
@@ -92,7 +95,8 @@ Vue 实例从创建到销毁的过程
 </keep-alive>
 ```
 
-`keep-alive`包裹动态组件时，会缓存
+`keep-alive`包裹动态组件时，有条件的实现缓存，组件切换时不会对当前组件进行卸载。
+
 [keep-alive 的使用原理](https://juejin.cn/post/6979853847007068197)
 
 ## 对 MVVM 的理解
