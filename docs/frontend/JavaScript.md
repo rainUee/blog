@@ -391,12 +391,14 @@ reject 是 Promise 的方法，而 then 和 catch 是 Promise 的实例的方法
 
 ### Event Loop
 
-![参考](http://vimeo.com/96425312)
+[参考](http://vimeo.com/96425312)
 
 ### 宏任务和微任务
 
 微任务和宏任务是异步任务的两个分类。
+
 宏任务：`script` `setTimeOut` `setInterval` `setImmediate`
+
 微任务：`Promise.then` `process` `nextTick` `Object.observe`
 
 ## 算法
