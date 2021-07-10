@@ -24,6 +24,7 @@ order: 5
      ![img](https://juejin.im/equation?tex=attr)listen
 
      event bus
+     <!-- TODO: 不会！ -->
 
      自行实现 dispatch 和 broadcast 方法
 
@@ -89,6 +90,14 @@ Vue 实例从创建到销毁的过程
 
 ### activated 和 deactivated 函数
 
+activated
+
+keep-alive 组件激活时调用，该钩子在服务器端渲染期间不被调用。
+
+deactivated
+
+keep-alive 组件停用时调用，该钩子在服务器端渲染期间不被调用。
+
 ```html
 <keep-alive>
   <component :is="view"></component>
@@ -98,6 +107,8 @@ Vue 实例从创建到销毁的过程
 `keep-alive`包裹动态组件时，有条件的实现缓存，组件切换时不会对当前组件进行卸载。
 
 [keep-alive 的使用原理](https://juejin.cn/post/6979853847007068197)
+
+<!-- TODO: 怎么使用 keep-alive https://juejin.cn/post/6844903713010614280 -->
 
 ## 对 MVVM 的理解
 
@@ -168,7 +179,7 @@ var app = new Vue({
 
 Vue 数据双向绑定是通过数据劫持结合发布者-订阅者模式的方式来实现的，利用了`Object.defineProperty()`这个方法重新定义了对象获取属性值`get`和设置属性值`set`
 
-Vue3.x 使用 `proxy`替代 `Object.defineProperty()`
+Vue3.x 使用 `proxy` 替代 `Object.defineProperty()`
 因为数据劫持无法监听通过索引修改数组的值的变化，也无法监听 object 的值的变化。
 
 ## Vue 如何监测数组变换
@@ -204,6 +215,12 @@ hash 模式：监听浏览器地址 hash 值（# 以及后的字符）变化，�
 
 history 模式： 利用 history API 实现 url 地址改变，网页内容改变
 
+## v-for 中为什么要使用 key
+
+添加唯一标识，高效地更新虚拟 DOM
+
+DOM diff
+
 ## v-if 和 v-show 的区别
 
 - v-if: 每次都会重新删除或创建元素来控制 DOM 结点的存在与否
@@ -229,3 +246,5 @@ history 模式： 利用 history API 实现 url 地址改变，网页内容改�
 ## diff 算法
 
 <!--TODO: https://juejin.cn/post/6978423272064942110-->
+
+## computed 和 $watch 侦听属性的区别

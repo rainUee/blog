@@ -304,6 +304,8 @@ textarea.addEventListener('keyup', function () {
 
 ## Promise
 
+[参考](https://es6.ruanyifeng.com/#docs/promise)
+
 ### 三种状态
 
 pending fulfilled rejected
@@ -378,7 +380,15 @@ class Promise {
 }
 ```
 
-<!-- TODO: promise的优缺点 -->
+<!-- TODO: promise 的优缺点 -->
+
+Promise 对象代表了未来将要发生的事件，用来传递异步操作的消息。
+
+#### Promise 的优缺点
+
+将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外，Promise 对象提供统一的接口，使得控制异步操作更加容易。
+
+Promise 也有一些缺点。首先，无法取消 Promise，一旦新建它就会立即执行，无法中途取消。其次，如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部。第三，当处于 pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
 
 [ES6 中的 Promise](http://www.cnblogs.com/wangfupeng1988/p/6515855.html)
 
@@ -391,12 +401,14 @@ reject 是 Promise 的方法，而 then 和 catch 是 Promise 的实例的方法
 
 ### Event Loop
 
-![参考](http://vimeo.com/96425312)
+[参考](http://vimeo.com/96425312)
 
 ### 宏任务和微任务
 
 微任务和宏任务是异步任务的两个分类。
+
 宏任务：`script` `setTimeOut` `setInterval` `setImmediate`
+
 微任务：`Promise.then` `process` `nextTick` `Object.observe`
 
 ## 算法
@@ -414,6 +426,20 @@ function shuffle(arr) {
   }
   return result;
 }
+```
+
+爬楼梯(每次爬 1 或 2 个台阶，爬上 n 阶有几种爬法？)
+
+```js
+var climbStairs = function (n) {
+  const res = [];
+  res[0] = 1;
+  res[1] = 2;
+  for (let i = 2; i <= n; i++) {
+    res[i] = res[i - 1] + res[i - 2];
+  }
+  return res[n];
+};
 ```
 
 将数组扁平化并去除其中重复数据，最终得到一个升序且不重复的数组
