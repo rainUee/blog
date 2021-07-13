@@ -185,6 +185,7 @@ Vue3.x 使用 `proxy` 替代 `Object.defineProperty()`
 ## Vue 如何监测数组变换
 
 push, pop, shift, unshift, sort, splice, reverse
+
 [官方文档](https://cn.vuejs.org/v2/guide/reactivity.html#%E6%A3%80%E6%B5%8B%E5%8F%98%E5%8C%96%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 
 ## v-model
@@ -247,4 +248,9 @@ DOM diff
 
 <!--TODO: https://juejin.cn/post/6978423272064942110-->
 
-## computed 和 $watch 侦听属性的区别
+## computed、$watch、methods 的区别
+
+1. computed 是计算值，只有值发生变化才会执行方法，watch 是监听观察动作，有改变就执行
+2. computed 具有缓存性，数据变化时先读取缓存，值没变这不做操作，而 watch 没有缓存，直接执行
+3. watch 接收两个参数（新，旧）
+4. watch 可以在数据变化时做一些异步处理或开销大的操作

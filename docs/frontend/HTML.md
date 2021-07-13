@@ -29,11 +29,11 @@ order: 1
 
 ![过程](https://pic3.zhimg.com/v2-1f9f6062ac51ed944e2dcbfd618636ca_r.jpg)
 
-### 为何要把 css 放在 head 中？？？
+### 为何要把 css 放在 head 中？
 
 在 DOM Tree 生成之前加载完 CSS，DOM Tree 生成之后直接和 CSSOM 整合渲染，一步到位
 
-### 为何要把 JS 放在 body 最后？？？
+### 为何要把 JS 放在 body 最后？
 
 极端情况下，js 在 body 中间会出现渲染过程阻塞，停止渲染，js 加载完之后重新开始渲染。所以建议 js 放在 body 最后。
 

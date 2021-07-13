@@ -64,8 +64,6 @@ Object.prototype.toString.call([]);
 Array.isArray([]);
 ```
 
-> > > > > > > 3ce9e62c0c7f222fbaa111312e1b0b0ad81e5802
-
 ### 作用域
 
 ```js
@@ -109,6 +107,13 @@ function checkTitle(score) {
 }
 ``` -->
 
+### 描述 new 一个对象的过程
+
+- 创建一个新对象
+- `this`指向这个新对象
+- 执行代码，即对`this`赋值
+- 返回`this`
+
 ### forEach 和 map 的区别
 
 forEach: 返回值为 undefined，无法中止，可以通过索引来修改原来的数组
@@ -117,6 +122,14 @@ map: 返回新数组，callback 需要有 return 值，若没有则返回 undefi
 forEach 结合 try...catch() 可以跳出循环
 
 ## 数组
+
+修改原数组的方法：
+
+pop、push、shift、unshift、reverse、sort、splice
+
+不改变原数组：
+
+concat、join、slice、map、filter、some、every
 
 ### 数组去重
 
@@ -400,6 +413,10 @@ reject 是 Promise 的方法，而 then 和 catch 是 Promise 的实例的方法
 (catch 是语法糖)
 
 ### Event Loop
+
+任务队列中，在每一次事件循环中， macrotask 只会提取一个执行，而 microtask 会一直提取，知道 microsoft 队列为空为止。
+
+也就是说如果某个 microtask 任务被推入到执行中，那么当主线程任务执行完成后，会循环调动该队列任务重的下一个任务来执行，知道该任务队列到最后一个任务为止，而事件循环每次只会入栈一个 macrotask，主线程执行完成后又会检查 microtask 队列并完成里面的所有任务后再执行 macrotask 任务。
 
 [参考](http://vimeo.com/96425312)
 
