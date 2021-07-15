@@ -6,8 +6,12 @@ order: 2
 ### 盒模型
 
 `box-sizing`: `border-box` `content-box` `inherit`.
-context-box: W3C 盒模型，width = content
+
+content-box: W3C 盒模型，width = content
+
 border-box: IE 盒模型， width = border + padding + content
+
+使用场景：tab 的高亮 / 表单和按钮的长度
 
 ### 画一条 0.5px 的线
 
@@ -36,9 +40,13 @@ animation 和 transition 大部分属性是相同的，他们都是随时间改�
 ### 哪些元素会生成 BFC
 
 根元素 (`<htmL>`)
+
 overflow 不为 visible 的块元素
+
 float 不为 none 的元素
+
 position 为 fixed 和 absolute 的元素
+
 display 为 `inline-block` `table-cell` `table-caption` `flex` `inline-flex`的元素
 
 ### 怎么让一个 div 水平垂直居中

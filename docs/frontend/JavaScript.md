@@ -428,6 +428,30 @@ reject 是 Promise 的方法，而 then 和 catch 是 Promise 的实例的方法
 
 微任务：`Promise.then` `process` `nextTick` `Object.observe`
 
+```js
+setTimeout(function () {
+  console.log(1);
+}, 0);
+
+new Promise(function (resolve, reject) {
+  console.log(2);
+  resolve();
+})
+  .then(function () {
+    console.log(3);
+  })
+  .then(function () {
+    console.log(4);
+  });
+
+process.nextTick(function () {
+  console.log(5);
+});
+
+console.log(6);
+//输出2,6,5,3,4,1
+```
+
 ## 算法
 
 洗牌算法
@@ -486,10 +510,15 @@ arr.sort((a, b) => a - b);
 ### 跨站脚本攻击（XSS）
 
 将用户输入的东西作为脚本输出
+
 解决方法：
+
 过滤输入/转义输出
+
 把半角转义为全角
+
 eval/v-html 可能会导致 xss？
+
 eval 将字符串解析成 js 并执行，消耗性能（一次解析，一次执行）
 
 ## 面向对象的特点
@@ -512,4 +541,57 @@ console.log(location.protocol); // 'http:' 'https:'
 console.log(location.pathname); // '/learn/199'
 console.log(location.search);
 console.log(location.hash);
+```
+
+## 一些面试题
+
+编写代码，满足以下条件：
+（1）Hero("37er");执行结果为
+
+Hi! This is 37er
+
+（2）Hero("37er").kill(1).recover(30);执行结果为
+
+Hi! This is 37er
+
+Kill 1 bug
+
+Recover 30 bloods
+
+（3）Hero("37er").sleep(10).kill(2)执行结果为
+
+Hi! This is 37er
+
+//等待 10s 后
+
+Kill 2 bugs //注意为 bugs
+
+（双斜线后的为提示信息，不需要打印）
+
+```js
+function Hero(name) {
+  let o = new Object();
+  o.name = name;
+  o.time = 0;
+  console.log('Hi! This is ' + o.name);
+  o.kill = function (bugs) {
+    if (bugs == 1) {
+      console.log('Kill ' + bugs + ' bug');
+    } else {
+      setTimeout(function () {
+        console.log('Kill ' + bugs + ' bugs');
+      }, 1000 * this.time);
+    }
+    return o;
+  };
+  o.recover = function (bloods) {
+    console.log('Recover ' + bloods + ' bloods');
+    return o;
+  };
+  o.sleep = function (sleepTime) {
+    o.time = sleepTime;
+    return o;
+  };
+  return o;
+}
 ```

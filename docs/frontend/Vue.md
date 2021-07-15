@@ -11,7 +11,7 @@ order: 5
 
    - vue 全家桶使用，vuex，vue-router
 
-   - data，computer，watcher 使用
+   - data，computed，watcher 使用
 
    - 组件通信
 
@@ -34,7 +34,7 @@ order: 5
 
    - new vue 时候发生什么，每个生命周期对应的源码做了什么
 
-   - data，watcher，computer 的源码实现
+   - data，watcher，computed 的源码实现
 
    - nextTick 的原理
 
@@ -194,9 +194,9 @@ v-model 来做表单双向数据绑定，v-model="msg"实则是 :value="msg" @in
 
 所以 v-model 指令同时做了两件事：
 
-1.监听 input 输入事件
+1. 监听 input 输入事件
 
-2.将输入的值绑定到对应数据上
+2. 将输入的值绑定到对应数据上
 
 ## vue-router 与 location.href 的区别
 
@@ -254,3 +254,4 @@ DOM diff
 2. computed 具有缓存性，数据变化时先读取缓存，值没变这不做操作，而 watch 没有缓存，直接执行
 3. watch 接收两个参数（新，旧）
 4. watch 可以在数据变化时做一些异步处理或开销大的操作
+5. methods 方法会进行多次执行，重复计算
