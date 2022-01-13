@@ -186,6 +186,12 @@ Vue3.x 使用 `proxy` 替代 `Object.defineProperty()`
 
 push, pop, shift, unshift, sort, splice, reverse
 
+**为什么要对数组进行单独处理**
+
+在Vue现有阶段中，对响应式处理利用的是Object.defineProperty对数据进行拦截，而这个方法并不能监听到数组内部变化，数组长度变化，数组的截取变化等，所以我们需要对这些操作进行hack，让vue能监听到其中的变化。
+
+所以 Vue 重写了数组中方法，首先获取到这个数组的__ob__，也就是它的Observer对象，如果有新的值，就调用observeArray继续对新的值观察变化，然后手动调用notify，通知渲染watcher，执行update
+
 [官方文档](https://cn.vuejs.org/v2/guide/reactivity.html#%E6%A3%80%E6%B5%8B%E5%8F%98%E5%8C%96%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 
 ## v-model

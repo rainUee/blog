@@ -101,17 +101,6 @@ console.log(b.x);
 - 利用闭包实现数据私有化或模拟私有方法。这个方式也称为[模块模式（module pattern）](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript)。
 - [部分参数函数（partial applications）柯里化（currying）](https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.l4b6l1i3x).
 
-<!-- ### 条件运算符
-
-```js
-function checkTitle(score) {
-  return score < 0 || score > 10
-    ? '无效分数'
-    : { 6: '秀才', 7: '进士', 8: '探花', 9: '榜眼', 10: '状元' }[~~score] ||
-        '秀才';
-}
-``` -->
-
 ### 描述 new 一个对象的过程
 
 - 创建一个新对象
@@ -322,11 +311,9 @@ textarea.addEventListener('keyup', function () {
 
 ## Promise
 
-[参考](https://es6.ruanyifeng.com/#docs/promise)
+Promise 执行时分三个状态：pending （执行中）、fulfilled （成功）、rejected （失败）。
 
-### 三种状态
-
-pending fulfilled rejected
+实现时有三个原型方法 then 、catch 、finally
 
 链式调用->解决回调地狱
 
@@ -358,7 +345,7 @@ const FULFILLED = 'FULFILLED'; // 已成功
 const REJECTED = 'REJECTED'; // 已失败
 
 class Promise {
-  constructor(exector) {
+  constructor(executor) {
     // 初始化状态
     this.status = PENDING;
     // 将成功、失败结果放在this上，便于then、catch访问
@@ -379,9 +366,9 @@ class Promise {
         this.reason = reason;
       }
     };
-    // 立即执行exector
+    // 立即执行executor
     // 把内部的resolve和reject传入executor，用户可调用resolve和reject
-    exector(resolve, reject);
+    executor(resolve, reject);
   }
   then(onFulfilled, onRejected) {
     // then是微任务，这里用setTimeout模拟
@@ -408,6 +395,7 @@ Promise 对象代表了未来将要发生的事件，用来传递异步操作的
 
 Promise 也有一些缺点。首先，无法取消 Promise，一旦新建它就会立即执行，无法中途取消。其次，如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部。第三，当处于 pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
 
+[参考](https://es6.ruanyifeng.com/#docs/promise)
 [ES6 中的 Promise](http://www.cnblogs.com/wangfupeng1988/p/6515855.html)
 
 ### reject 和 catch 处理上有什么区别
@@ -608,57 +596,4 @@ console.log(location.protocol); // 'http:' 'https:'
 console.log(location.pathname); // '/learn/199'
 console.log(location.search);
 console.log(location.hash);
-```
-
-## 一些面试题
-
-编写代码，满足以下条件：
-（1）Hero("37er");执行结果为
-
-Hi! This is 37er
-
-（2）Hero("37er").kill(1).recover(30);执行结果为
-
-Hi! This is 37er
-
-Kill 1 bug
-
-Recover 30 bloods
-
-（3）Hero("37er").sleep(10).kill(2)执行结果为
-
-Hi! This is 37er
-
-//等待 10s 后
-
-Kill 2 bugs //注意为 bugs
-
-（双斜线后的为提示信息，不需要打印）
-
-```js
-function Hero(name) {
-  let o = new Object();
-  o.name = name;
-  o.time = 0;
-  console.log('Hi! This is ' + o.name);
-  o.kill = function (bugs) {
-    if (bugs == 1) {
-      console.log('Kill ' + bugs + ' bug');
-    } else {
-      setTimeout(function () {
-        console.log('Kill ' + bugs + ' bugs');
-      }, 1000 * this.time);
-    }
-    return o;
-  };
-  o.recover = function (bloods) {
-    console.log('Recover ' + bloods + ' bloods');
-    return o;
-  };
-  o.sleep = function (sleepTime) {
-    o.time = sleepTime;
-    return o;
-  };
-  return o;
-}
 ```
