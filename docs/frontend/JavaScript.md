@@ -94,7 +94,12 @@ console.log(b.x);
 
 ### 闭包
 
-能够读取到其他函数内部变量的函数，或者子函数在外调用，子函数所在的父函数的作用域不会被释放。
+能够读取到其他函数内部变量的函数，或者子函数在外调用，子函数所在的父函数的作用域不会被释放。[closure](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures)
+
+**为什么使用闭包？**
+
+- 利用闭包实现数据私有化或模拟私有方法。这个方式也称为[模块模式（module pattern）](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript)。
+- [部分参数函数（partial applications）柯里化（currying）](https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.l4b6l1i3x).
 
 <!-- ### 条件运算符
 
@@ -451,6 +456,68 @@ process.nextTick(function () {
 console.log(6);
 //输出2,6,5,3,4,1
 ```
+
+## Ajax
+
+基于浏览器提供的 XMLHttpRequest（XHR）类
+
+```javascript
+export const Ajax = ({
+  method = 'get',
+  url = '/',
+  data,
+  async = true
+}, callback) => {
+  let xhr = new XMLHttpRequest()
+  xhr.onreadystatechange = () => {
+    // readyState的取值如下
+    // 0 (未初始化)
+    // 1 (正在装载, 已经调用open())
+    // 2 (装载完毕, 已经调用send())
+    // 3 (交互中)
+    // 4 (完成)
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      let res = JSON.parse(xhr.responseText)
+      callback(res)
+    }
+  }
+  xhr.open(method, url, async)
+  if (method === 'get') {
+    xhr.send()
+  }
+  if (method === 'post') {
+    let type = typeof data
+    let header
+    if (type === 'string') {
+      // 以表单的形式传递数据
+      header = 'application/x-www-form-urlencoded'
+    }
+    else {
+      header = 'application/json'
+      data = JSON.stringify(data)
+    }
+    xhr.setRequestHeader('Content-type', header)
+    xhr.send(data)
+  }
+}
+
+Ajax.get = (url, callback) => {
+  return Ajax({
+    url
+  }, callback)
+}
+
+
+Ajax.post = function (url, data, callback) {
+  return Ajax({
+    method: 'post',
+    url,
+    data,
+  }, callback)
+}
+```
+
+[分别使用 XHR、jQuery 和 Fetch 实现 AJAX](https://github.com/nodejh/nodejh.github.io/issues/15#)
 
 ## 算法
 
