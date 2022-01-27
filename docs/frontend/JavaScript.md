@@ -28,6 +28,7 @@ typeof function () {} === 'function';
 
 Boolean、 Number、 String 不是由内置函数 new 出来的
 symbol 是 ES6 引入的一种新的原始数据，表示独一无二且不可改变的值。通过 Symbol 函数调用生成，由于生成的 symbol 值为原始类型，所以 Symbol 函数不能使用 new 调用。
+BigInt 用于表示任意长度的整数。因为 Number 类型无法表示大于 (2^53-1)（即 9007199254740991），或小于 -(2^53-1) 的整数。
 
 ### null 和 undefined 的区别
 
@@ -58,10 +59,42 @@ var a = null;
 #### 判断数组
 
 ```js
-[] instanceof Array;
+[] instanceof Array; // ES6
 [].constructor === Array;
 Object.prototype.toString.call([]);
 Array.isArray([]);
+```
+
+### instanceof
+
+instanceof 运算符用于判断构造函数的 prototype 属性是否出现在对象的原型链中的任何位置。
+instanceof 只能正确判断引用数据类型。
+
+```js
+object instanceof constructor;
+```
+
+```js
+({} instanceof Object); // true
+[] instanceof Array; // true
+[] instanceof Object; // true
+var myNonObj = Object.create(null);
+myNonObj instanceof Object; // 返回 false, 一种创建非 Object 实例的对象的方法
+```
+
+#### 实现 instanceof
+
+```js
+function isInstanceof(a, b) {
+  if (typeof a !== 'object' || a === null) return false;
+  // Object.getPrototypeOf方法用来获取指定对象的原型
+  let proto = Object.getPrototypeOf(a);
+  while (true) {
+    if (proto === null) return false;
+    if (proto === b.prototype) return true;
+    proto = Object.getPrototypeOf(proto);
+  }
+}
 ```
 
 ### 作用域
@@ -104,8 +137,8 @@ console.log(b.x);
 ### 描述 new 一个对象的过程
 
 - 创建一个新对象
-- `this`指向这个新对象
-- 执行代码，即对`this`赋值
+- `this`指向这个新对象（将对象的`__proto__`属性指向构造函数的prototype）
+- 执行代码，即对`this`赋值（添加属性和方法）
 - 返回`this`
 
 ### forEach 和 map 的区别
@@ -162,34 +195,6 @@ function shuffle(arr) {
 ~~ 在处理正数的时候类似于 Math.floor，因为 -(-n-1)-1=n+1-1=n
 
 `Math.floor()`为向下取整
-
-### instanceof
-
-```js
-object instanceof constructor;
-```
-
-```js
-({} instanceof Object); // true
-[] instanceof Array; // true
-[] instanceof Object; // true
-var myNonObj = Object.create(null);
-myNonObj instanceof Object; // 返回 false, 一种创建非 Object 实例的对象的方法
-```
-
-实现 instanceof
-
-```js
-function isInstanceof(a, b) {
-  if (typeof a !== 'object' || a === null) return false;
-  let proto = Object.getPrototypeOf(a);
-  while (true) {
-    if (proto === null) return false;
-    if (proto === b.prototype) return true;
-    proto = Object.getPrototypeOf(proto);
-  }
-}
-```
 
 ### 浅拷贝
 
@@ -275,9 +280,11 @@ console.log(a, b);
 function debounce(fn, delay) {
   let timer = null;
   return function () {
+    // 如果此时存在定时器的话，则取消之前的定时器重新记时
     if (timer) {
       clearTimeout(timer);
     }
+    // 设置定时器，使事件间隔指定事件后执行
     timer = setTimeout(() => {
       fn.apply(this, arguments);
       timer = null;
@@ -307,7 +314,21 @@ textarea.addEventListener('keyup', function () {
     // 触发 change 事件
   }, 100);
 });
+
+function throttle(fn, delay) {
+  let curTime = Date.now();
+  return function () {
+    let nowTime = Date.now();
+    // 如果两次时间间隔超过了指定时间，则执行函数。
+    if (nowTime - curTime >= delay) {
+      curTime = Date.now();
+      return fn.apply(this, arguments);
+    }
+  }
+}
 ```
+
+## 原型
 
 ## Promise
 
@@ -336,7 +357,7 @@ $.get('./data1.json', function (data1) {
 console.log('end');
 ```
 
-### 实现 promise
+### 实现 Promise
 
 ```js
 // 定义三种状态
@@ -385,11 +406,13 @@ class Promise {
 }
 ```
 
-<!-- TODO: promise 的优缺点 -->
-
 Promise 对象代表了未来将要发生的事件，用来传递异步操作的消息。
 
-#### Promise 的优缺点
+### 实现 Promise.all
+
+
+
+### Promise 的优缺点
 
 将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外，Promise 对象提供统一的接口，使得控制异步操作更加容易。
 
@@ -449,6 +472,17 @@ console.log(6);
 
 基于浏览器提供的 XMLHttpRequest（XHR）类
 
+`XMLHttpRequest` 的状态（state）
+
+```
+UNSENT = 0; // 初始状态
+OPENED = 1; // open 被调用
+HEADERS_RECEIVED = 2; // 接收到 response header
+LOADING = 3; // 响应正在被加载（接收到一个数据包）
+DONE = 4; // 请求完成
+```
+### 回调函数实现 Ajax
+
 ```javascript
 export const Ajax = ({
   method = 'get',
@@ -458,12 +492,7 @@ export const Ajax = ({
 }, callback) => {
   let xhr = new XMLHttpRequest()
   xhr.onreadystatechange = () => {
-    // readyState的取值如下
-    // 0 (未初始化)
-    // 1 (正在装载, 已经调用open())
-    // 2 (装载完毕, 已经调用send())
-    // 3 (交互中)
-    // 4 (完成)
+    // 请求完成
     if (xhr.readyState === 4 && xhr.status === 200) {
       let res = JSON.parse(xhr.responseText)
       callback(res)
@@ -597,3 +626,51 @@ console.log(location.pathname); // '/learn/199'
 console.log(location.search);
 console.log(location.hash);
 ```
+
+## 断点续传
+
+实现可恢复，需要知道服务器接收的字节数。
+
+1. 文件标识
+
+```javascript
+let fileId = file.name + '-' + file.size + '-' + +file.lastModifiedDate;
+```
+
+2. 发送请求，询问已有字节
+
+```javascript
+let response = await fetch('status', {
+  //服务器通过 X-File-Id header 跟踪文件上传
+  headers: {
+    'X-File-Id': fileId
+  }
+});
+
+// 服务器已有的字节数
+let startByte = +await response.text();
+```
+
+3. 使用 `Blob` 和 `slice` 方法来发送从 `startByte` 开始的文件
+
+```javascript
+xhr.open("POST", "upload", true);
+
+// 文件 id，以便服务器知道我们要恢复的是哪个文件
+xhr.setRequestHeader('X-File-Id', fileId);
+
+// 发送我们要从哪个字节开始恢复，因此服务器知道我们正在恢复
+xhr.setRequestHeader('X-Start-Byte', startByte);
+
+xhr.upload.onprogress = (e) => {
+  console.log(`Uploaded ${startByte + e.loaded} of ${startByte + e.total}`);
+};
+
+// 文件可以是来自 input.files[0]，或者另一个源
+xhr.send(file.slice(startByte));
+```
+
+Blob 表示“具有类型的二进制数据”。
+`blob.slice([byteStart], [byteEnd], [contentType]);`
+
+[可恢复的文件上传](https://zh.javascript.info/resume-upload)
