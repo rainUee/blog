@@ -1,19 +1,22 @@
-# ES6
+---
+title: ES6
+order: 4
+---
 
 ## let 和 const
 
 - var 声明的变量存在变量提升的情况。
-- let 所声明的变量，只在let命令所在的代码块内有效。
+- let 所声明的变量，只在 let 命令所在的代码块内有效。
 - const 声明一个只读常量（内存地址不变）。
 
 **顶层对象**，在浏览器环境指的是`window`对象，在 Node 指的是`global`对象
 
-在 ES5  中，顶层对象的属性与全局变量是等价的。
+在 ES5 中，顶层对象的属性与全局变量是等价的。
 
 ## 解构赋值
 
 ```javascript
-// 交换变量值 
+// 交换变量值
 let x = 1;
 let y = 2;
 
@@ -25,7 +28,7 @@ map.set('first', 'hello');
 map.set('second', 'world');
 
 for (let [key, value] of map) {
-  console.log(key + " is " + value);
+  console.log(key + ' is ' + value);
 }
 // first is hello
 // second is world
@@ -71,7 +74,7 @@ var React = require('react');
 var Breadcrumbs = React.createClass({
   render() {
     return <nav />;
-  }
+  },
 });
 
 module.exports = Breadcrumbs;
@@ -83,7 +86,7 @@ class Breadcrumbs extends React.Component {
   render() {
     return <nav />;
   }
-};
+}
 
 export default Breadcrumbs;
 ```
