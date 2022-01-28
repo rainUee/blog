@@ -124,6 +124,8 @@ div.parent {
 
 `place-items`是`align-items`和`justify-items`两个 CSS 属性的简写
 
+[水平垂直居中](https://github.com/yanhaijing/vertical-center)
+
 ### CSS 选择器
 
 内联样式(`style="font-weight:bold"`) > 类型选择器(`h1`)，伪元素(`::before`) > 类选择器，属性选择器(`[type="radio"]`)，伪类(`:hover`) > ID 选择器(`#example`)
