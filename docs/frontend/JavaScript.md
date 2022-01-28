@@ -67,7 +67,7 @@ Array.isArray([]);
 
 ### instanceof
 
-instanceof 运算符用于判断构造函数的 prototype 属性是否出现在对象的原型链中的任何位置。
+instanceof 运算符用于判断构造函数的 prototype 属性是否出现在对象的原型链中的**任何**位置。
 instanceof 只能正确判断引用数据类型。
 
 ```js
@@ -133,11 +133,12 @@ console.log(b.x);
 
 - 利用闭包实现数据私有化或模拟私有方法。这个方式也称为[模块模式（module pattern）](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript)。
 - [部分参数函数（partial applications）柯里化（currying）](https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.l4b6l1i3x).
+  <span id='new'></span>
 
 ### 描述 new 一个对象的过程
 
 - 创建一个新对象
-- `this`指向这个新对象（将对象的`__proto__`属性指向构造函数的prototype）
+- `this`指向这个新对象（将对象的`__proto__`属性指向构造函数的 prototype）
 - 执行代码，即对`this`赋值（添加属性和方法）
 - 返回`this`
 
@@ -324,11 +325,67 @@ function throttle(fn, delay) {
       curTime = Date.now();
       return fn.apply(this, arguments);
     }
-  }
+  };
 }
 ```
 
 ## 原型
+
+`Object.getPrototypeOf`:返回指定对象的原型(内部属性 Prototype 的值)
+
+`Object.prototype.__proto__`:一个对象的`__proto__ `属性和自己的内部属性[[Prototype]]指向一个相同的值 (通常称这个值为原型)，原型的值可以是一个对象值也可以是 null(比如说`Object.prototype.__proto__`的值就是 null)。
+
+**对象原型`__proto__`**，每个对象都会有的属性，new 出来的实例通过`__proto__`属性来指向原型对象。
+
+**原型对象 prototype**，每个构造函数都有 prototype 属性，是个对象，通过构造函数.prototype 指向。
+
+每一个构造函数都有 prototype 属性，指向另一个对象。这个 prototype 就是个对象，这个对象的所有属性方法，都会被构造函数所拥有的。
+
+一般情况下我们的公共属性直接定义在构造函数里面，公共的方法我们放在原型对象里面。
+
+`__proto__`对象原型和原型对象是等价的，只不过写在不同对象上，一个写在函数后，一个写在对象后。
+
+```js
+class A {}
+class B extends A {}
+const b = new B();
+Object.getPrototypeOf(b) === B.prototype;
+// true
+// b ---> B.prototype === A的实例
+// 如何如何不通过类和函数实现继承？
+```
+
+`Function.__proto__`指向自己的`Function.prototype`
+
+```javascript
+// 下面两行语句的结果是，为什么
+Function instanceof Object;
+Object instanceof Function;
+```
+
+Object 为函数，所以是 Function 的实例。
+
+`Function.prototype`为对象，所以是 Object 实例（因为原型对象就是一个对象）。
+
+### new 和 Object.create() 的区别
+
+- 使用 new 创建的对象，通过 this 引用会获取到属性和方法，并且该对象与构造函数指向相同的 prototype。
+- `Object.create()`方法创建一个新对象，使用现有的对象来提供新创建的对象的`__proto__`。
+- `Object.create()`只会继承原型链上的方法和属性
+
+[new 一个对象的过程](#new)
+
+[原型链](https://yanhaijing.com/javascript/2021/03/13/javascript-prototype-chain/)
+
+## 面向对象
+
+特点：抽象、继承、多态
+
+面向对象是操作对象，把事务分解成一个个对象，然后对对象进行操作，有利于复用、维护、扩展。
+
+这个事件中有哪些类和对象，这些类和对象有哪些属性和方法，然后再将对象联系起来。
+
+面向过程就是分析这个事件，分析出解决问题的步骤，一步一步实现，使用的时候再一步步调用。
 
 ## Promise
 
@@ -410,8 +467,6 @@ Promise 对象代表了未来将要发生的事件，用来传递异步操作的
 
 ### 实现 Promise.all
 
-
-
 ### Promise 的优缺点
 
 将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外，Promise 对象提供统一的接口，使得控制异步操作更加容易。
@@ -481,57 +536,60 @@ HEADERS_RECEIVED = 2; // 接收到 response header
 LOADING = 3; // 响应正在被加载（接收到一个数据包）
 DONE = 4; // 请求完成
 ```
+
 ### 回调函数实现 Ajax
 
 ```javascript
-export const Ajax = ({
-  method = 'get',
-  url = '/',
-  data,
-  async = true
-}, callback) => {
-  let xhr = new XMLHttpRequest()
+export const Ajax = (
+  { method = 'get', url = '/', data, async = true },
+  callback,
+) => {
+  let xhr = new XMLHttpRequest();
   xhr.onreadystatechange = () => {
     // 请求完成
     if (xhr.readyState === 4 && xhr.status === 200) {
-      let res = JSON.parse(xhr.responseText)
-      callback(res)
+      let res = JSON.parse(xhr.responseText);
+      callback(res);
     }
-  }
-  xhr.open(method, url, async)
+  };
+  xhr.open(method, url, async);
   if (method === 'get') {
-    xhr.send()
+    xhr.send();
   }
   if (method === 'post') {
-    let type = typeof data
-    let header
+    let type = typeof data;
+    let header;
     if (type === 'string') {
       // 以表单的形式传递数据
-      header = 'application/x-www-form-urlencoded'
+      header = 'application/x-www-form-urlencoded';
+    } else {
+      header = 'application/json';
+      data = JSON.stringify(data);
     }
-    else {
-      header = 'application/json'
-      data = JSON.stringify(data)
-    }
-    xhr.setRequestHeader('Content-type', header)
-    xhr.send(data)
+    xhr.setRequestHeader('Content-type', header);
+    xhr.send(data);
   }
-}
+};
 
 Ajax.get = (url, callback) => {
-  return Ajax({
-    url
-  }, callback)
-}
-
+  return Ajax(
+    {
+      url,
+    },
+    callback,
+  );
+};
 
 Ajax.post = function (url, data, callback) {
-  return Ajax({
-    method: 'post',
-    url,
-    data,
-  }, callback)
-}
+  return Ajax(
+    {
+      method: 'post',
+      url,
+      data,
+    },
+    callback,
+  );
+};
 ```
 
 [分别使用 XHR、jQuery 和 Fetch 实现 AJAX](https://github.com/nodejh/nodejh.github.io/issues/15#)
@@ -605,10 +663,6 @@ eval/v-html 可能会导致 xss？
 
 eval 将字符串解析成 js 并执行，消耗性能（一次解析，一次执行）
 
-## 面向对象的特点
-
-抽象、继承、多态
-
 ## 如何检测浏览器的类型
 
 ```javascript
@@ -643,18 +697,18 @@ let fileId = file.name + '-' + file.size + '-' + +file.lastModifiedDate;
 let response = await fetch('status', {
   //服务器通过 X-File-Id header 跟踪文件上传
   headers: {
-    'X-File-Id': fileId
-  }
+    'X-File-Id': fileId,
+  },
 });
 
 // 服务器已有的字节数
-let startByte = +await response.text();
+let startByte = +(await response.text());
 ```
 
 3. 使用 `Blob` 和 `slice` 方法来发送从 `startByte` 开始的文件
 
 ```javascript
-xhr.open("POST", "upload", true);
+xhr.open('POST', 'upload', true);
 
 // 文件 id，以便服务器知道我们要恢复的是哪个文件
 xhr.setRequestHeader('X-File-Id', fileId);
