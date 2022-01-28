@@ -175,6 +175,14 @@ var app = new Vue({
 }
 ```
 
+## 组件通信
+
+- Props
+- emit
+- Provider / Inject
+- $emit / $on
+- EventBus
+
 ## Vue 双向绑定原理
 
 Vue 数据双向绑定是通过数据劫持结合发布者-订阅者模式的方式来实现的，利用了`Object.defineProperty()`这个方法重新定义了对象获取属性值`get`和设置属性值`set`
@@ -188,9 +196,9 @@ push, pop, shift, unshift, sort, splice, reverse
 
 **为什么要对数组进行单独处理**
 
-在Vue现有阶段中，对响应式处理利用的是Object.defineProperty对数据进行拦截，而这个方法并不能监听到数组内部变化，数组长度变化，数组的截取变化等，所以我们需要对这些操作进行hack，让vue能监听到其中的变化。
+在 Vue 现有阶段中，对响应式处理利用的是 Object.defineProperty 对数据进行拦截，而这个方法并不能监听到数组内部变化，数组长度变化，数组的截取变化等，所以我们需要对这些操作进行 hack，让 vue 能监听到其中的变化。
 
-所以 Vue 重写了数组中方法，首先获取到这个数组的__ob__，也就是它的Observer对象，如果有新的值，就调用observeArray继续对新的值观察变化，然后手动调用notify，通知渲染watcher，执行update
+所以 Vue 重写了数组中方法，首先获取到这个数组的**ob**，也就是它的 Observer 对象，如果有新的值，就调用 observeArray 继续对新的值观察变化，然后手动调用 notify，通知渲染 watcher，执行 update
 
 [官方文档](https://cn.vuejs.org/v2/guide/reactivity.html#%E6%A3%80%E6%B5%8B%E5%8F%98%E5%8C%96%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 
