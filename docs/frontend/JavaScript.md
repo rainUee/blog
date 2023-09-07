@@ -56,6 +56,18 @@ var a = null;
 
 `typeof`、`instanceof`、`constructor`、`toString`
 
+```js
+[] == ![]
+// []作为对象ToPrimitivie得到''
+// ![]作为boolean转换得到0
+// '' == 0 包含字符串，所以toNumber转换 0 == 0 得到true
+
+[] == []
+// fasle
+// 引用类型[]其实是一个指向内存的指针
+// 两个对象指向的不是同一个地址
+```
+
 #### 判断数组
 
 ```js
@@ -467,6 +479,26 @@ Promise 对象代表了未来将要发生的事件，用来传递异步操作的
 
 ### 实现 Promise.all
 
+```js
+function promiseAll(arr) {
+  return new Promise((resolve,reject) => {
+    let res = []
+    let count = 0
+    arr.forEach((promise, index)=>{
+      Promise.resolve(promise).then((value)=>{
+        res[index] = value
+        count++
+        if(count === arr.length){
+          resolve(res)
+        }
+      }, (reason) => {
+        reject(reason)
+      })
+    })
+  })
+}
+```
+
 ### Promise 的优缺点
 
 将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外，Promise 对象提供统一的接口，使得控制异步操作更加容易。
@@ -529,7 +561,7 @@ console.log(6);
 
 `XMLHttpRequest` 的状态（state）
 
-```
+```js
 UNSENT = 0; // 初始状态
 OPENED = 1; // open 被调用
 HEADERS_RECEIVED = 2; // 接收到 response header
