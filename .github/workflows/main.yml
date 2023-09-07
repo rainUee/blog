@@ -36,6 +36,6 @@ jobs:
         env:
           CI: true
           GIT_USER: Rainee
-          GIT_EMAIL: ${{secrets.GITHUBEMAIL}}
+          GIT_EMAIL: ${{ secrets.GITHUBEMAIL }}
           GH_PAT: ${{ secrets.ACTION_TOKEN }}
 

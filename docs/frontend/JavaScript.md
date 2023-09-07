@@ -277,6 +277,42 @@ console.log(a, b);
 
 深拷贝，是拷贝对象各个层级的属性。
 
+### bind、call、apply 区别
+
+`call`和 `apply` 是为了解决改变 `this`的指向。作用都是相同的，只是传参的方式不同。
+
+除了第一个参数外，`call`可以接收一个参数列表，`apply`只接受一个参数数组。
+
+`bind` 接收多个参数，第一个是bind返回值返回值是一个函数上下文的this，不会立即执行。
+
+```js
+Function.prototype.bind = function (context, ...args) {
+    return (...newArgs) => {
+        return this.call(context, ...args, ...newArgs)
+    }
+}
+```
+
+```js
+Function.prototype.call = function (context, ...args) {
+    // context为null时，context设置为window
+    context = context || window
+    context.fn = this
+    let result = context.fn(...args)
+    delete context.fn
+    return result
+}
+
+// apply 只需要把参数修改即可
+Function.prototype.apply = function (context, args) {
+    context = context || window
+    context.fn = this
+    let result = context.fn(...args)
+    delete context.fn
+    return result
+}
+```
+
 ## 函数
 
 ### 防抖

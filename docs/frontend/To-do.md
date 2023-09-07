@@ -23,8 +23,6 @@
 
 ## 问到的面试题
 
-http 长连接
-
 快排
 
 websocket

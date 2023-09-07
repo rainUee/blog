@@ -185,10 +185,19 @@ var app = new Vue({
 
 ## Vue 双向绑定原理
 
-Vue 数据双向绑定是通过数据劫持结合发布者-订阅者模式的方式来实现的，利用了`Object.defineProperty()`这个方法重新定义了对象获取属性值`get`和设置属性值`set`
+1. Vue2 双向绑定原理：
 
-Vue3.x 使用 `proxy` 替代 `Object.defineProperty()`
-因为数据劫持无法监听通过索引修改数组的值的变化，也无法监听 object 的值的变化。
+Vue2 使用的双向绑定核心原理是基于数据劫持和发布-订阅模式。Vue2 的双向绑定分为两部分：数据劫持（通过 Object.defineProperty()） 和 Watcher 类。
+
+- 数据劫持：Vue2 使用 Object.defineProperty() 方法劫持数据对象的属性，对属性的 getter 和 setter 进行拦截。当属性值被访问或修改时，会触发 getter 和 setter，实现数据的响应式。
+- Watcher 类：Watcher 用于订阅数据变化和更新视图。每个数据属性都有一个 Watcher 实例，当数据发生变化时，触发 setter，并通知 Watcher，然后 Watcher 会调用其更新函数，将新值应用到 DOM。
+
+2. Vue3 双向绑定原理：
+
+Vue3 的双向绑定原理基于 Proxy 和 Reflect。Vue3 使用 Proxy 对象对数据进行代理，而不是像 Vue2 那样使用 Object.defineProperty() 进行数据劫持。
+
+- Proxy：Vue3 使用 Proxy 对象创建一个数据代理，当代理对象的属性被访问或修改时，会触发 Proxy 的拦截器函数（如 get 或 set），实现数据的响应式。
+- Reflect：Vue3 使用 Reflect API 进行对象操作，如获取属性值、设置属性值等。Reflect API 提供了一种更简洁、安全的方法来操作对象，同时具有更好的性能。
 
 ## Vue 如何监测数组变换
 
@@ -248,7 +257,13 @@ DOM diff
 
 ## Vue实例是怎么拿到data属性的
 
-Vue 会递归将 data 属性转化为 getter/setter 方法，从而使得 data 属性能够响应数据变化。
+准备：Vue 会遍历 data 对象（如果是 Function 类型，Vue 会先调用函数，创建对应对象），并将所有属性通过 Object.defineProperty() 转换成 getter/setter 。
+collect as dependency：每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触”过的数据属性记录为依赖。
+notify：当 setter 被触发时，会通知 watcher。
+trigger re-render：watcher 重新渲染关联的组件。
+touch：如果实例修改 data 属性的值，将会触发 setter。
+
+![Vue 实例的 data 属性]https://www.codenong.com/js559c40c8ecd0/
 
 ```js
 // Object 类型 data 属性
@@ -321,25 +336,34 @@ Vue 3 使用了虚拟 DOM (Vdom)，并采用深度优先遍历 (Depth-First Trav
 Vue 3 在内部进行了许多性能优化，包括重写了虚拟DOM，提高了渲染性能。
 Vue 3 的编译器生成更优化的渲染函数代码，减少了运行时的工作量。
 新的响应式系统减少了内存开销。
+
 2. Composition API：
 Vue 3 引入了 Composition API，这是一种更灵活和可组合的方式来组织和重用组件逻辑，使得代码更具可维护性和可测试性。
 Composition API 允许将相关代码组织到功能性组合中，而不是按照选项（data、methods、computed）的方式组织。
+
 3. TypeScript 支持：
 Vue 3 在内部使用 TypeScript 编写，提供了更好的 TypeScript 类型支持。
 TypeScript 用户可以更轻松地推断组件和 Props 的类型，减少了类型错误。
+
 4. Teleport：
 Vue 3 引入了 Teleport 特性，允许将组件的内容渲染到DOM中的不同位置，这对于处理模态框、弹出菜单等场景非常有用。
+
 5. Fragments：
 Vue 3 支持多个根元素，即 Fragments，而 Vue 2 不支持。
 这意味着您可以在组件的模板中具有多个顶级元素而无需包装元素。
+
 6. 自定义渲染器：
 Vue 3 支持自定义渲染器，允许您将Vue应用程序渲染到不同的目标，例如原生移动应用、命令行、三维场景等。
+
 7. 更好的Tree Shaking支持：
 Vue 3 提供更好的 Tree Shaking 支持，使得可以更轻松地剔除不使用的代码。
+
 8. 全局 API 的重构：
 Vue 3 的全局 API（如Vue.directive、Vue.filter等）进行了重构，使其更具可扩展性和模块化。
+
 9. 模块化架构：
 Vue 3 的模块化架构允许按需加载功能，降低了初始化和加载的成本。
+
 10. 过渡和动画：
 Vue 3 引入了新的 <transition> 和 <transition-group> 的 API，以支持更灵活的过渡和动画效果。
 
