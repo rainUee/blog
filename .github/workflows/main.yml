@@ -11,11 +11,11 @@ jobs:
 
     strategy:
       matrix:
-        node: [12]
+        node: [14]
         os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Use Node.js 15.x
         uses: actions/setup-node@v1
         with:
@@ -26,9 +26,8 @@ jobs:
           yarn
           yarn build
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ACCESS_TOKEN: ${{ secrets.ACTION_TOKEN}}
           BRANCH: gh-pages
           FOLDER: dist
           REPOSITORY_NAME: rainuee/blog
@@ -38,4 +37,5 @@ jobs:
           CI: true
           GIT_USER: Rainee
           GIT_EMAIL: ${{secrets.GITHUBEMAIL}}
+          GH_PAT: ${{ secrets.ACTION_TOKEN }}
 
